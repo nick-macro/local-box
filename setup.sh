@@ -10,6 +10,6 @@ mkdir -p $HOME/.local/bin
 
 cd $HOME/repos
 git clone git@github.com:nick-macro/local-box.git
-uv tool install .
+uv tool install --editable .
 
 echo "Setup complete! You can now use the `local-box` command to learn more."
