@@ -6,6 +6,9 @@ if [ -f ~/.secrets ]; then
     source ~/.secrets
 fi
 
+autoload -Uz compinit
+compinit
+
 eval "$(uv generate-shell-completion zsh)"
 eval "$(uvx --generate-shell-completion zsh)"
 
