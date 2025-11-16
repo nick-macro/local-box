@@ -38,3 +38,5 @@ def clean() -> None:
     Backend entry point for the clean operation.
     """
     subprocess.run("docker system prune --all -f", shell=True, check=True)
+    subprocess.run("brew cleanup --prune=all -s", shell=True, check=True)
+    subprocess.run("uv cache clean", shell=True, check=True)
