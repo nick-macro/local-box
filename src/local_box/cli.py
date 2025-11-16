@@ -29,17 +29,3 @@ def clean() -> None:
     except Exception as e:
         typer.echo(f"Clean failed: {e}")
         raise typer.Exit(code=1)
-
-
-@app.command()
-def uninstall() -> None:
-    """
-    Uninstall all managed dependencies.
-    """
-    typer.echo("Running uninstall...")
-    try:
-        backend.uninstall()
-        typer.echo("Uninstall completed.")
-    except Exception as e:
-        typer.echo(f"Uninstall failed: {e}")
-        raise typer.Exit(code=1)

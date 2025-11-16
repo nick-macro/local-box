@@ -1,24 +1,40 @@
-from .dependencies.dependencies import dependencies
+import subprocess
+from importlib.resources import files
+import os
 
 def update() -> None:
     """
     Backend entry point for the update operation.
     """
-    for dep in dependencies:
-        dep.update()
+
+    dirs = [
+        "$HOME/.config/homebrew",
+    ]
+    for dir in dirs:
+        os.makedirs(os.path.expandvars(dir), exist_ok=True)
+
+    links = [
+        {"source": "brewfile", "target": "$HOME/.config/homebrew/Brewfile"},
+        {"source": "zprofile", "target": "$HOME/.zprofile"},
+        {"source": "zshenv", "target": "$HOME/.zshenv"},
+        {"source": "zshrc", "target": "$HOME/.zshrc"},
+    ]
+
+    for link in links:
+        source = files("local_box.data").joinpath(link["source"])
+        target = os.path.expandvars(link["target"])
+
+        subprocess.run(
+            ["ln", "-sf", str(source), str(target)],
+            check=True,
+        )
+
+    # Use zsh -lic to source new environment variables
+    subprocess.run(["zsh", "-lic", "brew bundle install"], check=True)
 
 
 def clean() -> None:
     """
     Backend entry point for the clean operation.
     """
-    for dep in dependencies:
-        dep.clean()
-
-
-def uninstall() -> None:
-    """
-    Backend entry point for the uninstall operation.
-    """
-    for dep in dependencies:
-        dep.uninstall()
+    subprocess.run("docker system prune --all -f", shell=True, check=True)
