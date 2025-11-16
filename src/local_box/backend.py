@@ -18,6 +18,8 @@ def update() -> None:
         {"source": "zprofile", "target": "$HOME/.zprofile"},
         {"source": "zshenv", "target": "$HOME/.zshenv"},
         {"source": "zshrc", "target": "$HOME/.zshrc"},
+        {"source": "vscode_keybindings", "target": "$HOME/Library/Application Support/Code/User/keybindings.json"},
+        {"source": "vscode_settings", "target": "$HOME/Library/Application Support/Code/User/settings.json"},
     ]
 
     for link in links:
