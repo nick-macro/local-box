@@ -17,5 +17,6 @@
     "workbench.iconTheme": "vs-minimal",
     "workbench.startupEditor": "none",
     "claudeCode.selectedModel": "default",
-    "chat.commandCenter.enabled": false
+    "chat.commandCenter.enabled": false,
+    "claudeCode.preferredLocation": "panel"
 }
