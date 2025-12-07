@@ -27,6 +27,7 @@ def sync() -> None:
         {"source": "zprofile", "target": "~/.zprofile"},
         {"source": "zshenv", "target": "~/.zshenv"},
         {"source": "zshrc", "target": "~/.zshrc"},
+        {"source": "gitconfig", "target": "~/.gitconfig"},
     ]
     for link in links:
         link_from_project_data(link["source"], link["target"])

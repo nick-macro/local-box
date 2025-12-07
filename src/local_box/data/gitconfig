@@ -1,0 +1,6 @@
+[user]
+	name = Nick Macro
+	email = nmacro34@gmail.com
+
+[core]
+    editor = code --wait
