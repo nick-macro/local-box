@@ -1,48 +1,53 @@
 import subprocess
 from importlib.resources import files
-import os
+from pathlib import Path
 
-def update() -> None:
+
+def link_from_project_data(source: str, target: str) -> None:
+    source = files("local_box.data").joinpath(source)
+    target = Path(target).expanduser()
+
+    target.unlink(missing_ok=True)
+    target.symlink_to(source)
+
+
+def sync() -> None:
     """
-    Backend entry point for the update operation.
+    Backend entry point for the sync operation.
     """
 
     dirs = [
-        "$HOME/.config/homebrew",
+        Path("~/.config/homebrew").expanduser(),
     ]
     for dir in dirs:
-        os.makedirs(os.path.expandvars(dir), exist_ok=True)
+        dir.mkdir(parents=True, exist_ok=True)
 
     links = [
-        {"source": "brewfile", "target": "$HOME/.config/homebrew/Brewfile"},
-        {"source": "zprofile", "target": "$HOME/.zprofile"},
-        {"source": "zshenv", "target": "$HOME/.zshenv"},
-        {"source": "zshrc", "target": "$HOME/.zshrc"},
+        {"source": "brewfile", "target": "~/.config/homebrew/Brewfile"},
+        {"source": "zprofile", "target": "~/.zprofile"},
+        {"source": "zshenv", "target": "~/.zshenv"},
+        {"source": "zshrc", "target": "~/.zshrc"},
     ]
     for link in links:
-        source = files("local_box.data").joinpath(link["source"])
-        target = os.path.expandvars(link["target"])
-
-        subprocess.run(
-            ["ln", "-sf", str(source), str(target)],
-            check=True,
-        )
+        link_from_project_data(link["source"], link["target"])
 
     # Use zsh -lic to source new environment variables
     subprocess.run(["zsh", "-lic", "brew bundle install"], check=True)
+    subprocess.run(["zsh", "-lic", "brew bundle cleanup"], check=True)
 
     links = [
-        {"source": "vscode_keybindings", "target": "$HOME/Library/Application Support/Code/User/keybindings.json"},
-        {"source": "vscode_settings", "target": "$HOME/Library/Application Support/Code/User/settings.json"},
+        {
+            "source": "vscode_keybindings",
+            "target": "~/Library/Application Support/Code/User/keybindings.json",
+        },
+        {
+            "source": "vscode_settings",
+            "target": "~/Library/Application Support/Code/User/settings.json",
+        },
     ]
     for link in links:
-        source = files("local_box.data").joinpath(link["source"])
-        target = os.path.expandvars(link["target"])
+        link_from_project_data(link["source"], link["target"])
 
-        subprocess.run(
-            ["ln", "-sf", str(source), str(target)],
-            check=True,
-        )
 
 def clean() -> None:
     """

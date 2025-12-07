@@ -3,17 +3,18 @@ from . import backend
 
 app = typer.Typer(help="A simple CLI for managing local dependencies.")
 
+
 @app.command()
-def update() -> None:
+def sync() -> None:
     """
     Update managed dependencies.
     """
-    typer.echo("Running update...")
+    typer.echo("Running sync...")
     try:
-        backend.update()
-        typer.echo("Update completed.")
+        backend.sync()
+        typer.echo("Sync completed.")
     except Exception as e:
-        typer.echo(f"Update failed: {e}")
+        typer.echo(f"Sync failed: {e}")
         raise typer.Exit(code=1)
 
 
