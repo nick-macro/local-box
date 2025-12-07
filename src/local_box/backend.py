@@ -18,10 +18,7 @@ def update() -> None:
         {"source": "zprofile", "target": "$HOME/.zprofile"},
         {"source": "zshenv", "target": "$HOME/.zshenv"},
         {"source": "zshrc", "target": "$HOME/.zshrc"},
-        {"source": "vscode_keybindings", "target": "$HOME/Library/Application Support/Code/User/keybindings.json"},
-        {"source": "vscode_settings", "target": "$HOME/Library/Application Support/Code/User/settings.json"},
     ]
-
     for link in links:
         source = files("local_box.data").joinpath(link["source"])
         target = os.path.expandvars(link["target"])
@@ -34,6 +31,18 @@ def update() -> None:
     # Use zsh -lic to source new environment variables
     subprocess.run(["zsh", "-lic", "brew bundle install"], check=True)
 
+    links = [
+        {"source": "vscode_keybindings", "target": "$HOME/Library/Application Support/Code/User/keybindings.json"},
+        {"source": "vscode_settings", "target": "$HOME/Library/Application Support/Code/User/settings.json"},
+    ]
+    for link in links:
+        source = files("local_box.data").joinpath(link["source"])
+        target = os.path.expandvars(link["target"])
+
+        subprocess.run(
+            ["ln", "-sf", str(source), str(target)],
+            check=True,
+        )
 
 def clean() -> None:
     """
