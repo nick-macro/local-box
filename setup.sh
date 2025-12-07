@@ -15,4 +15,4 @@ git clone git@github.com:nick-macro/local-box.git
 uv tool install --editable ./local-box
 
 echo "Installing dependencies using local-box..."
-uvx local-box install
+uvx local-box update
