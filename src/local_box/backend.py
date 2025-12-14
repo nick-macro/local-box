@@ -34,7 +34,7 @@ def sync() -> None:
 
     # Use zsh -lic to source new environment variables
     subprocess.run(["zsh", "-lic", "brew bundle install"], check=True)
-    subprocess.run(["zsh", "-lic", "brew bundle cleanup"], check=True)
+    subprocess.run(["zsh", "-lic", "brew bundle cleanup --force"], check=True)
 
 
 def clean() -> None:
