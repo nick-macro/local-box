@@ -36,19 +36,6 @@ def sync() -> None:
     subprocess.run(["zsh", "-lic", "brew bundle install"], check=True)
     subprocess.run(["zsh", "-lic", "brew bundle cleanup"], check=True)
 
-    links = [
-        {
-            "source": "vscode_keybindings",
-            "target": "~/Library/Application Support/Code/User/keybindings.json",
-        },
-        {
-            "source": "vscode_settings",
-            "target": "~/Library/Application Support/Code/User/settings.json",
-        },
-    ]
-    for link in links:
-        link_from_project_data(link["source"], link["target"])
-
 
 def clean() -> None:
     """
