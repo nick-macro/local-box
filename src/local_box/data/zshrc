@@ -11,7 +11,14 @@ fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
 autoload -Uz compinit
 compinit
 
-eval "$(uv generate-shell-completion zsh)"
-eval "$(uvx --generate-shell-completion zsh)"
+if [ "$(which uv)" = "/opt/homebrew/bin/uv" ]; then
+    eval "$(uv generate-shell-completion zsh)"
+fi
 
-source $(brew --prefix)/opt/spaceship/spaceship.zsh
+if [ "$(which uv)" = "/opt/homebrew/bin/uv" ]; then
+    eval "$(uvx --generate-shell-completion zsh)"
+fi
+
+if [ -f $(brew --prefix)/opt/spaceship/spaceship.zsh ]; then
+    source $(brew --prefix)/opt/spaceship/spaceship.zsh
+fi
