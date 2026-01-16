@@ -21,6 +21,13 @@ else
     brew install gh
 fi
 
+if ssh -T git@github.com 2>&1 | grep -q "successfully authenticated"; then
+    echo "✅ GitHub ssh is configured. Skipping setup."
+else
+    echo "🔧 Setting up GitHub ssh."
+    gh auth login -w -c -p ssh
+fi
+
 REPO_PATH="$HOME/repos/local-box"
 REPO_URL="git@github.com:nick-macro/local-box.git"
 
@@ -36,14 +43,6 @@ if uv tool list | grep -q "^local-box "; then
 else
     echo "🔧 Installing local-box as a uv tool."
     uv tool install --editable $HOME/repos/local-box
-fi
-
-
-if ssh -T git@github.com 2>&1 | grep -q "successfully authenticated"; then
-    echo "✅ GitHub ssh is configured. Skipping setup."
-else
-    echo "🔧 Setting up GitHub ssh."
-    gh auth login -w -c -p ssh
 fi
 
 echo "⬇️ Recommended next step: run 'local-box sync' in the terminal."
