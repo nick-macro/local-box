@@ -14,6 +14,13 @@ else
     brew install uv
 fi
 
+if [ "$(which gh)" = "/opt/homebrew/bin/gh" ]; then
+    echo "✅ gh is installed via Homebrew. Skipping gh installation."
+else
+    echo "🔧 Homebrew installation of gh not detected. Installing gh via Homebrew."
+    brew install gh
+fi
+
 REPO_PATH="$HOME/repos/local-box"
 REPO_URL="git@github.com:nick-macro/local-box.git"
 
@@ -27,9 +34,16 @@ fi
 if uv tool list | grep -q "^local-box "; then
     echo "✅ local-box is installed. Skipping installation."
 else
-    echo "🔧 local-box is not installed as a uv tool"
+    echo "🔧 Installing local-box as a uv tool."
     uv tool install --editable $HOME/repos/local-box
 fi
 
-echo "🔧 Installing dependencies using local-box..."
-uvx local-box sync
+
+if ssh -T git@github.com 2>&1 | grep -q "successfully authenticated"; then
+    echo "✅ GitHub ssh is configured. Skipping setup."
+else
+    echo "🔧 Setting up GitHub ssh."
+    gh auth login -w -c -p ssh
+fi
+
+echo "⬇️ Recommended next step: run 'local-box sync' in the terminal."
