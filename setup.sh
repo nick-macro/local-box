@@ -1,3 +1,4 @@
+#!/bin/zsh
 
 if command -v brew &> /dev/null; then
     echo "✅ Homebrew detected. Skipping Homebrew installation."
@@ -45,4 +46,4 @@ else
     uv tool install --editable $HOME/repos/local-box
 fi
 
-echo "⬇️ Recommended next step: run 'local-box sync' in the terminal."
+$HOME/.local/bin/local-box sync
