@@ -2,14 +2,6 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_NO_ENV_HINTS=1
 export HOMEBREW_BUNDLE_FILE=$HOME/.config/homebrew/Brewfile
 
-if [ -f ~/.oci/config ]; then
-    export OCI_CLI_USER=$(grep '^user=' ~/.oci/config | cut -d= -f2)
-    export OCI_CLI_FINGERPRINT=$(grep '^fingerprint=' ~/.oci/config | cut -d= -f2)
-    export OCI_CLI_TENANCY=$(grep '^tenancy=' ~/.oci/config | cut -d= -f2)
-    export OCI_CLI_REGION=$(grep '^region=' ~/.oci/config | cut -d= -f2)
-    export OCI_CLI_KEY_FILE=$(grep '^key_file=' ~/.oci/config | cut -d= -f2)
-fi
-
 if [ -f ~/.secrets ]; then
     source ~/.secrets
 fi
