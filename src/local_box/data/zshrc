@@ -8,6 +8,8 @@ fi
 
 fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
 
+ssh-add --apple-use-keychain 2>/dev/null
+
 autoload -Uz compinit
 compinit
 
