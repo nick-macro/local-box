@@ -28,6 +28,7 @@ def sync() -> None:
         {"source": "zshenv", "target": "~/.zshenv"},
         {"source": "zshrc", "target": "~/.zshrc"},
         {"source": "gitconfig", "target": "~/.gitconfig"},
+        {"source": "keyboard.json", "target": "~/.keyboard.json"},
     ]
     for link in links:
         link_from_project_data(link["source"], link["target"])
